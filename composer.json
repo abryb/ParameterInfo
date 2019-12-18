@@ -1,0 +1,27 @@
+{
+    "name": "abryb/parameter-info",
+    "description": "",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Błażej Rybarkiewicz",
+            "email": "abryb.api@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Abryb\\ParameterInfo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Abryb\\ParameterInfo\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "phpdocumentor/reflection-docblock": "^4.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
