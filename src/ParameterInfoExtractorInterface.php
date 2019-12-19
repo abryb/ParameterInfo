@@ -9,5 +9,5 @@ namespace Abryb\ParameterInfo;
  */
 interface ParameterInfoExtractorInterface
 {
-    public function extractInfo(\ReflectionParameter $parameter): ParameterInfo;
+    public function getInfo(\ReflectionParameter $parameter): ParameterInfo;
 }

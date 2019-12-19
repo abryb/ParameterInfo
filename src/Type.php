@@ -13,14 +13,14 @@ namespace Abryb\ParameterInfo;
  */
 class Type
 {
-    const BUILTIN_TYPE_INT = 'int';
-    const BUILTIN_TYPE_FLOAT = 'float';
-    const BUILTIN_TYPE_STRING = 'string';
-    const BUILTIN_TYPE_BOOL = 'bool';
+    const BUILTIN_TYPE_INT      = 'int';
+    const BUILTIN_TYPE_FLOAT    = 'float';
+    const BUILTIN_TYPE_STRING   = 'string';
+    const BUILTIN_TYPE_BOOL     = 'bool';
     const BUILTIN_TYPE_RESOURCE = 'resource';
-    const BUILTIN_TYPE_OBJECT = 'object';
-    const BUILTIN_TYPE_ARRAY = 'array';
-    const BUILTIN_TYPE_NULL = 'null';
+    const BUILTIN_TYPE_OBJECT   = 'object';
+    const BUILTIN_TYPE_ARRAY    = 'array';
+    const BUILTIN_TYPE_NULL     = 'null';
     const BUILTIN_TYPE_CALLABLE = 'callable';
     const BUILTIN_TYPE_ITERABLE = 'iterable';
 
@@ -65,11 +65,11 @@ class Type
             throw new \InvalidArgumentException(sprintf('"%s" is not a valid PHP type.', $builtinType));
         }
 
-        $this->builtinType = $builtinType;
-        $this->nullable = $nullable;
-        $this->class = $class;
-        $this->collection = $collection;
-        $this->collectionKeyType = $collectionKeyType;
+        $this->builtinType         = $builtinType;
+        $this->nullable            = $nullable;
+        $this->class               = $class;
+        $this->collection          = $collection;
+        $this->collectionKeyType   = $collectionKeyType;
         $this->collectionValueType = $collectionValueType;
     }
 

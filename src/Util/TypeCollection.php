@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Abryb\ParameterInfo\Util;
-
 
 use Abryb\ParameterInfo\Type;
 
@@ -16,7 +14,7 @@ use Abryb\ParameterInfo\Type;
 class TypeCollection
 {
     /**
-     * @var Type[]|array
+     * @var array|Type[]
      */
     private $types;
 
@@ -27,15 +25,16 @@ class TypeCollection
 
     /**
      * TypeCollection constructor.
+     *
      * @param Type[] $types
      */
     public function __construct(array $types = [], TypeComparator $typeComparator = null)
     {
-        $this->types = $types;
+        $this->types          = $types;
         $this->typeComparator = $typeComparator ?? new TypeComparator();
     }
 
-    public function unique() : TypeCollection
+    public function unique(): TypeCollection
     {
         $types = new static([]);
         foreach ($this->types as $type) {
@@ -43,13 +42,14 @@ class TypeCollection
                 $types->types[] = $type;
             }
         }
+
         return $types;
     }
 
     /**
      * @return Type[]
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->types;
     }
@@ -65,8 +65,7 @@ class TypeCollection
         return true;
     }
 
-
-    public function add(Type $type) : self
+    public function add(Type $type): self
     {
         $this->types[] = $type;
 

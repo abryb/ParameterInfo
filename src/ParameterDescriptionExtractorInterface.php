@@ -9,5 +9,5 @@ namespace Abryb\ParameterInfo;
  */
 interface ParameterDescriptionExtractorInterface
 {
-    public function extractDescription(\ReflectionParameter $parameter): ?string;
+    public function getDescription(\ReflectionParameter $parameter): ?string;
 }

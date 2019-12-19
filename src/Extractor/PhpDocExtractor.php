@@ -36,7 +36,7 @@ class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescr
     /**
      * {@inheritdoc}
      */
-    public function extractTypes(\ReflectionParameter $parameter): array
+    public function getTypes(\ReflectionParameter $parameter): array
     {
         $tag = $this->getParamTag($parameter);
 
@@ -50,12 +50,12 @@ class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescr
     /**
      * {@inheritdoc}
      */
-    public function extractDescription(\ReflectionParameter $parameter): ?string
+    public function getDescription(\ReflectionParameter $parameter): ?string
     {
         $tag = $this->getParamTag($parameter);
 
         if ($tag && $tag->getDescription()) {
-            return $tag->getDescription();
+            return $tag->getDescription()->render();
         }
 
         return null;
@@ -70,15 +70,21 @@ class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescr
         /** @var Param[] $paramsTag */
         $paramsTag = $docBlock->getTagsByName('param');
 
-        // 1. find tag by position
-        $tag = $paramsTag[$parameter->getPosition()] ?? null;
 
-        // 2. override with named tag
+        $tag = null;
+        // 1. Find tag by name
         foreach ($paramsTag as $t) {
             if ($t->getVariableName() === $parameter->getName()) {
                 $tag = $t;
 
                 break;
+            }
+        }
+
+        // 2. find tag by position
+        if (null === $tag) {
+            if (count($paramsTag) === $parameter->getDeclaringFunction()->getNumberOfParameters()) {
+                $tag = $paramsTag[$parameter->getPosition()];
             }
         }
 
@@ -88,7 +94,7 @@ class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescr
     private function getDocBlock(\ReflectionParameter $parameter): ?DocBlock
     {
         if (!$docComment = $parameter->getDeclaringFunction()->getDocComment()) {
-            null;
+            return null;
         }
 
         return $this->docBlockFactory->create($docComment);

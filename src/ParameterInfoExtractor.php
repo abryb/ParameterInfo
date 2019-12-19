@@ -10,49 +10,32 @@ namespace Abryb\ParameterInfo;
 class ParameterInfoExtractor implements ParameterInfoExtractorInterface
 {
     /**
-     * @var array|ParameterTypeExtractorInterface[]
+     * @var ParameterTypeExtractorInterface
      */
-    private $typeExtractors;
+    private $typeExtractor;
     /**
-     * @var array|ParameterDescriptionExtractorInterface[]
+     * @var ParameterDescriptionExtractorInterface
      */
-    private $descriptionExtractors;
+    private $descriptionExtractor;
 
     /**
      * ParameterInfoExtractor constructor.
-     *
-     * @param iterable|ParameterTypeExtractorInterface[]        $typeExtractors
-     * @param iterable|ParameterDescriptionExtractorInterface[] $descriptionExtractors
      */
     public function __construct(
-        iterable $typeExtractors = [],
-        iterable $descriptionExtractors = []
+        ParameterTypeExtractorInterface $typeExtractor,
+        ParameterDescriptionExtractorInterface $descriptionExtractor
     )
     {
-        $this->typeExtractors        = $typeExtractors;
-        $this->descriptionExtractors = $descriptionExtractors;
+        $this->typeExtractor        = $typeExtractor;
+        $this->descriptionExtractor = $descriptionExtractor;
     }
 
-    public function extractInfo(\ReflectionParameter $parameter): ParameterInfo
+    public function getInfo(\ReflectionParameter $parameter): ParameterInfo
     {
-        $types = $this->doExtract($this->typeExtractors, 'extractTypes', [$parameter]);
-
-        $description = $this->doExtract($this->typeExtractors, 'description', [$parameter]);
-
-        return new ParameterInfo($parameter, $types, $description);
-    }
-
-    /**
-     * Iterates over registered extractors and return the first value found.
-     */
-    private function doExtract(iterable $extractors, string $method, array $arguments)
-    {
-        foreach ($extractors as $extractor) {
-            if (null !== $value = $extractor->{$method}(...$arguments)) {
-                return $value;
-            }
-        }
-
-        return null;
+        return new ParameterInfo(
+            $parameter,
+            $this->typeExtractor->getTypes($parameter),
+            $this->descriptionExtractor->getDescription($parameter)
+        );
     }
 }

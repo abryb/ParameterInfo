@@ -35,8 +35,25 @@ class PhpDocExtractorTest extends TestCase
      */
     public function testCanExtractTypes(\ReflectionParameter $parameter, array $expected)
     {
-        $types = $this->extractor->extractTypes($parameter);
+        $types = $this->extractor->getTypes($parameter);
 
         $this->assertEquals($expected, $types);
+    }
+
+    public function testCanGetDescription()
+    {
+        /**
+         * @param array $parameter description
+         */
+        $testFunction = function(array $parameter) {
+
+        };
+
+        $refMethod = new \ReflectionFunction($testFunction);
+
+
+        $description = $this->extractor->getDescription($refMethod->getParameters()[0]);
+
+        $this->assertEquals('description', $description);
     }
 }

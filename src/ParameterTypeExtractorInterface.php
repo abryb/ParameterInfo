@@ -12,5 +12,5 @@ interface ParameterTypeExtractorInterface
     /**
      * @return Type[]
      */
-    public function extractTypes(\ReflectionParameter $parameter): array;
+    public function getTypes(\ReflectionParameter $parameter): array;
 }
