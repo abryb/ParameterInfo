@@ -1,8 +1,14 @@
 {
     "name": "abryb/parameter-info",
-    "description": "",
+    "description": "Resolve method parameter type.",
     "type": "library",
     "license": "MIT",
+    "keywords" : [
+        "php",
+        "reflection",
+        "parameter",
+        "type"
+    ],
     "authors": [
         {
             "name": "Błażej Rybarkiewicz",
@@ -20,6 +26,7 @@
         }
     },
     "require": {
+        "php": "^7.3",
         "phpdocumentor/reflection-docblock": "^4.3"
     },
     "minimum-stability": "dev",

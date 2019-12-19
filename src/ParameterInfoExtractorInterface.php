@@ -9,5 +9,17 @@ namespace Abryb\ParameterInfo;
  */
 interface ParameterInfoExtractorInterface
 {
-    public function getInfo(\ReflectionParameter $parameter): ParameterInfo;
+    public function getParameterInfo(\ReflectionParameter $parameter): ParameterInfo;
+
+    /**
+     * @param \ReflectionFunction $function
+     * @return ParameterInfo[]
+     */
+    public function getFunctionParameters(\ReflectionFunction $function) : array;
+
+    /**
+     * @param \ReflectionMethod $method
+     * @return ParameterInfo[]
+     */
+    public function getMethodParameters(\ReflectionMethod $method) : array;
 }

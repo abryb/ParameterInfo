@@ -30,12 +30,31 @@ class ParameterInfoExtractor implements ParameterInfoExtractorInterface
         $this->descriptionExtractor = $descriptionExtractor;
     }
 
-    public function getInfo(\ReflectionParameter $parameter): ParameterInfo
+    /**
+     * {@inheritDoc}
+     */
+    public function getParameterInfo(\ReflectionParameter $parameter): ParameterInfo
     {
         return new ParameterInfo(
             $parameter,
             $this->typeExtractor->getTypes($parameter),
             $this->descriptionExtractor->getDescription($parameter)
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getFunctionParameters(\ReflectionFunction $function): array
+    {
+        return array_map([$this,'getParameterInfo'], $function->getParameters());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMethodParameters(\ReflectionMethod $method): array
+    {
+        return array_map([$this,'getParameterInfo'], $method->getParameters());
     }
 }
