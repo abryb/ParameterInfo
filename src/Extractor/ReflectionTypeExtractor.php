@@ -19,7 +19,7 @@ class ReflectionTypeExtractor implements ParameterTypeExtractorInterface
     {
         $type = $parameter->getType();
 
-        if (null === $type || ! $type instanceof \ReflectionNamedType) {
+        if (null === $type || !$type instanceof \ReflectionNamedType) {
             return [];
         }
 

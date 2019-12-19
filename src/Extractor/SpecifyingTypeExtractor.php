@@ -55,6 +55,10 @@ class SpecifyingTypeExtractor implements ParameterTypeExtractorInterface
         $originalTypes = $this->mainExtractor->getTypes($parameter);
         $specifying    = $this->specifyingExtractor->getTypes($parameter);
 
+        if (empty($originalTypes)) {
+            return $specifying;
+        }
+
         $result = [];
         foreach ($originalTypes as $o) {
             foreach ($specifying as $s) {

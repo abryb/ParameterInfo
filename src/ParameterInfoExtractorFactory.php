@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Abryb\ParameterInfo;
-
 
 use Abryb\ParameterInfo\Extractor\PhpDocExtractor;
 use Abryb\ParameterInfo\Extractor\ReflectionTypeExtractor;
@@ -15,7 +13,7 @@ use Abryb\ParameterInfo\Extractor\SpecifyingTypeExtractor;
  */
 final class ParameterInfoExtractorFactory
 {
-    public static function create() : ParameterInfoExtractorInterface
+    public static function create(): ParameterInfoExtractorInterface
     {
         $phpDocExtractor         = new PhpDocExtractor();
 

@@ -45,12 +45,10 @@ class PhpDocExtractorTest extends TestCase
         /**
          * @param array $parameter description
          */
-        $testFunction = function(array $parameter) {
-
+        $testFunction = function (array $parameter) {
         };
 
         $refMethod = new \ReflectionFunction($testFunction);
-
 
         $description = $this->extractor->getDescription($refMethod->getParameters()[0]);
 

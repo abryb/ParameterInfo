@@ -70,7 +70,6 @@ class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescr
         /** @var Param[] $paramsTag */
         $paramsTag = $docBlock->getTagsByName('param');
 
-
         $tag = null;
         // 1. Find tag by name
         foreach ($paramsTag as $t) {

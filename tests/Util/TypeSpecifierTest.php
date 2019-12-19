@@ -44,14 +44,13 @@ class TypeSpecifierTest extends TestCase
         $objectDateTimeInterface  = new Type(Type::BUILTIN_TYPE_OBJECT, false, \DateTimeInterface::class);
         $objectDateTime           = new Type(Type::BUILTIN_TYPE_OBJECT, false, \DateTime::class);
 
-
         return [
-//            [null, null, null],
-//            [null, $object, $object],
-//            [$object, null, $object],
-//            [$string, $arrayCollectionIntString, $string],
-//            [$iterable, $array, $iterable],
-//            [$array, $iterable, $array],
+            //            [null, null, null],
+            //            [null, $object, $object],
+            //            [$object, null, $object],
+            //            [$string, $arrayCollectionIntString, $string],
+            //            [$iterable, $array, $iterable],
+            //            [$array, $iterable, $array],
             [$array, $iterableCollection, $arrayCollection],
             [$arrayCollection, $arrayCollectionIntString, $arrayCollectionIntString],
             [$nullableArray, $array, $array],

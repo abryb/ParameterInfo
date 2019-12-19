@@ -14,17 +14,26 @@ use Abryb\ParameterInfo\ParameterInfoExtractorFactory;
 $extractor = ParameterInfoExtractorFactory::create();
 
 /**
-* @param int[] $parameter array of ints!
+ * @param object|null                          $a0 very object description. Important!
+ * @param \DateInterval[]|\DateTime[]|iterable $a1
  */
-$method = function(array $parameter) {
-
+$function = function ($a0, iterable $a1) {
+    // ...
 };
 
-$parameters = $extractor->getFunctionParameters(new \ReflectionFunction($method));
+$parameters = $extractor->getMethodParameters(new \ReflectionFunction($function));
 
-$parameters[0]->getDescription(); // array of ints!
-$parameters[0]->getTypes()[0]->getBuiltinType() ; // array
-$parameters[0]->getTypes()[0]->getClassName() ; // null
-$parameters[0]->getTypes()[0]->isCollection() ; // true
-$parameters[0]->getTypes()[0]->getCollectionValueType()->getBuiltinType() ; // int
+$parameters[0]->getDescription(); // very object description. Important!
+$parameters[0]->getTypes()[0]->getBuiltinType(); // object
+$parameters[0]->getTypes()[0]->isNullable(); // true
+$parameters[0]->getTypes()[0]->getClassName(); // null
+$parameters[0]->getTypes()[0]->isCollection(); // false
+
+$parameters[1]->getTypes()[0]->getBuiltinType(); // iterable
+$parameters[0]->getTypes()[0]->isCollection(); // true
+
+$parameters[1]->getTypes()[0]->getCollectionValueType()->getClassName(); // DateTime
+
+$parameters[1]->getTypes()[1]->getCollectionValueType()->getClassName(); // DateInterval
+
 ```

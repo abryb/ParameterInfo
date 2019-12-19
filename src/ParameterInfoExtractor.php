@@ -31,7 +31,7 @@ class ParameterInfoExtractor implements ParameterInfoExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getParameterInfo(\ReflectionParameter $parameter): ParameterInfo
     {
@@ -43,10 +43,10 @@ class ParameterInfoExtractor implements ParameterInfoExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getMethodParameters(\ReflectionFunctionAbstract $method): array
     {
-        return array_map([$this,'getParameterInfo'], $method->getParameters());
+        return array_map([$this, 'getParameterInfo'], $method->getParameters());
     }
 }

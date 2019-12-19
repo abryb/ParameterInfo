@@ -28,15 +28,13 @@ class TypeSpecifier
         return $this->doSpecifyType($original, $specifying);
     }
 
-    private function doSpecifyType(Type $original, Type $specifying) : Type
+    private function doSpecifyType(Type $original, Type $specifying): Type
     {
         $original = $this->specifyCollection($original, $specifying);
 
         $original = $this->specifyNullable($original, $specifying);
 
-        $original = $this->specifyClass($original, $specifying);
-
-        return $original;
+        return $this->specifyClass($original, $specifying);
     }
 
     private function specifyCollection(Type $original, Type $specifying): Type
@@ -61,7 +59,7 @@ class TypeSpecifier
         );
     }
 
-    private function specifyNullable(Type $original, Type $specifying) : Type
+    private function specifyNullable(Type $original, Type $specifying): Type
     {
         $nullable = $original->isNullable() && $specifying->isNullable();
 
@@ -75,7 +73,7 @@ class TypeSpecifier
         );
     }
 
-    private function specifyClass(Type $original, Type $specifying) : Type
+    private function specifyClass(Type $original, Type $specifying): Type
     {
         if (null === $specifying->getClassName() || $original->getClassName() === $specifying->getClassName()) {
             return $original;
@@ -90,6 +88,7 @@ class TypeSpecifier
                 $original->getCollectionValueType()
             );
         }
+
         return $original;
     }
 }

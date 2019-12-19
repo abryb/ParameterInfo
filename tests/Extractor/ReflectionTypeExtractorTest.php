@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-
 namespace Abryb\ParameterInfo\Tests\Extractor;
-
 
 use Abryb\ParameterInfo\Extractor\ReflectionTypeExtractor;
 use Abryb\ParameterInfo\Type;
@@ -12,12 +10,13 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @author Błażej Rybarkiewicz <b.rybarkiewicz@gmail.com>
+ *
+ * @internal
+ * @coversNothing
  */
 class ReflectionTypeExtractorTest extends TestCase
 {
     private $extractor;
-
-
 
     protected function setUp(): void
     {
@@ -34,8 +33,7 @@ class ReflectionTypeExtractorTest extends TestCase
 
     public function canGetTypeDataProvider()
     {
-        $f = function(int $a2, $a3) {
-
+        $f = function (int $a2, $a3) {
         };
         $ref = new \ReflectionFunction($f);
 
