@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @author Błażej Rybarkiewicz <b.rybarkiewicz@gmail.com>
  *
  * @internal
- * @coversNothing
+ * @covers \Abryb\ParameterInfo\Util\TypeSpecifier
  */
 class TypeSpecifierTest extends TestCase
 {
@@ -26,13 +26,14 @@ class TypeSpecifierTest extends TestCase
     /**
      * @dataProvider canSpecifyTypeDataProvider
      */
-    public function testCanSpecifyType(Type $a, Type $b, Type $expected)
+    public function testCanSpecifyType(?Type $a, ?Type $b, ?Type $expected)
     {
         $this->assertEquals($expected, $this->specifier->specifyType($a, $b));
     }
 
     public function canSpecifyTypeDataProvider()
     {
+        $string                   = new Type(Type::BUILTIN_TYPE_STRING);
         $iterable                 = new Type(Type::BUILTIN_TYPE_ITERABLE);
         $array                    = new Type(Type::BUILTIN_TYPE_ARRAY);
         $iterableCollection       = new Type(Type::BUILTIN_TYPE_ITERABLE, false, null, true);
@@ -45,8 +46,12 @@ class TypeSpecifierTest extends TestCase
 
 
         return [
-            [$iterable, $array, $array],
-            [$array, $iterable, $array],
+//            [null, null, null],
+//            [null, $object, $object],
+//            [$object, null, $object],
+//            [$string, $arrayCollectionIntString, $string],
+//            [$iterable, $array, $iterable],
+//            [$array, $iterable, $array],
             [$array, $iterableCollection, $arrayCollection],
             [$arrayCollection, $arrayCollectionIntString, $arrayCollectionIntString],
             [$nullableArray, $array, $array],

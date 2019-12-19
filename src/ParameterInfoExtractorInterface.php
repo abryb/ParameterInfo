@@ -12,14 +12,8 @@ interface ParameterInfoExtractorInterface
     public function getParameterInfo(\ReflectionParameter $parameter): ParameterInfo;
 
     /**
-     * @param \ReflectionFunction $function
+     * @param \ReflectionFunctionAbstract|\ReflectionFunction|\ReflectionMethod $method
      * @return ParameterInfo[]
      */
-    public function getFunctionParameters(\ReflectionFunction $function) : array;
-
-    /**
-     * @param \ReflectionMethod $method
-     * @return ParameterInfo[]
-     */
-    public function getMethodParameters(\ReflectionMethod $method) : array;
+    public function getMethodParameters(\ReflectionFunctionAbstract $method) : array;
 }

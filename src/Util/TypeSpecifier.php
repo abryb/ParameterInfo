@@ -13,20 +13,7 @@ use Abryb\ParameterInfo\Type;
  */
 class TypeSpecifier
 {
-    public function specifyType(Type $original, Type $specifying): Type
-    {
-        $original = $this->specifyIterableOrArray($original, $specifying);
-
-        $original = $this->specifyCollection($original, $specifying);
-
-        $original = $this->specifyNullable($original, $specifying);
-
-        $original = $this->specifyClass($original, $specifying);
-
-        return $original;
-    }
-
-    public function nullableSpecify(?Type $original, ?Type $specifying): ?Type
+    public function specifyType(?Type $original, ?Type $specifying): ?Type
     {
         if (null === $original && null === $specifying) {
             return null;
@@ -38,38 +25,39 @@ class TypeSpecifier
             return $specifying;
         }
 
-        return $this->specifyType($original, $specifying);
+        return $this->doSpecifyType($original, $specifying);
     }
 
-    private function specifyIterableOrArray(Type $original, Type $specifying): Type
+    private function doSpecifyType(Type $original, Type $specifying) : Type
     {
-        if (Type::BUILTIN_TYPE_ITERABLE === $original->getBuiltinType() && Type::BUILTIN_TYPE_ARRAY === $specifying->getBuiltinType()) {
-            $original =  new Type(
-                Type::BUILTIN_TYPE_ARRAY,
-                $original->isNullable(),
-                $original->getClassName(),
-                $original->isCollection(),
-                $original->getCollectionKeyType(),
-                $original->getCollectionValueType()
-            );
-        }
+        $original = $this->specifyCollection($original, $specifying);
+
+        $original = $this->specifyNullable($original, $specifying);
+
+        $original = $this->specifyClass($original, $specifying);
 
         return $original;
     }
 
     private function specifyCollection(Type $original, Type $specifying): Type
     {
-        $isCollection = $original->isCollection() || $specifying->isCollection();
-        $keyType      = $this->nullableSpecify($original->getCollectionKeyType(), $specifying->getCollectionKeyType());
-        $valueType    = $this->nullableSpecify($original->getCollectionValueType(), $specifying->getCollectionValueType());
+        $collectionTypes = [Type::BUILTIN_TYPE_ITERABLE, Type::BUILTIN_TYPE_ARRAY, Type::BUILTIN_TYPE_OBJECT];
+
+        if (!\in_array($original->getBuiltinType(), $collectionTypes) || !\in_array($specifying->getBuiltinType(), $collectionTypes)) {
+            return $original;
+        }
+
+        $isCollection        = $original->isCollection() || $specifying->isCollection();
+        $collectionKeyType   = $this->specifyType($original->getCollectionKeyType(), $specifying->getCollectionKeyType());
+        $collectionValueType = $this->specifyType($original->getCollectionValueType(), $specifying->getCollectionValueType());
 
         return new Type(
             $original->getBuiltinType(),
             $original->isNullable(),
             $original->getClassName(),
             $isCollection,
-            $keyType,
-            $valueType
+            $collectionKeyType,
+            $collectionValueType
         );
     }
 

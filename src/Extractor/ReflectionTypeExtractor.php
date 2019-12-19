@@ -17,13 +17,16 @@ class ReflectionTypeExtractor implements ParameterTypeExtractorInterface
      */
     public function getTypes(\ReflectionParameter $parameter): array
     {
-        if (!$parameter->hasType()) {
-            return null;
-        }
-        if (!$parameter->getType()->isBuiltin()) {
-            return [new Type(Type::BUILTIN_TYPE_OBJECT, $parameter->allowsNull(), $parameter->getClass()->getName())];
+        $type = $parameter->getType();
+
+        if (null === $type || ! $type instanceof \ReflectionNamedType) {
+            return [];
         }
 
-        return [new Type((string) $parameter->getType(), $parameter->allowsNull())];
+        if (!$type->isBuiltin()) {
+            return [new Type(Type::BUILTIN_TYPE_OBJECT, $parameter->allowsNull(), $type->getName())];
+        }
+
+        return [new Type($type->getName(), $parameter->allowsNull())];
     }
 }

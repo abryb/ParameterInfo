@@ -45,15 +45,7 @@ class ParameterInfoExtractor implements ParameterInfoExtractorInterface
     /**
      * {@inheritDoc}
      */
-    public function getFunctionParameters(\ReflectionFunction $function): array
-    {
-        return array_map([$this,'getParameterInfo'], $function->getParameters());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getMethodParameters(\ReflectionMethod $method): array
+    public function getMethodParameters(\ReflectionFunctionAbstract $method): array
     {
         return array_map([$this,'getParameterInfo'], $method->getParameters());
     }

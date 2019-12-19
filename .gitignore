@@ -11,5 +11,3 @@ phpunit.phar
 
 # IDE
 .idea
-
-test.php
