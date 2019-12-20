@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
- * @coversNothing
+ * @covers \Abryb\ParameterInfo\Extractor\PhpDocExtractor
  */
 class PhpDocExtractorTest extends TestCase
 {

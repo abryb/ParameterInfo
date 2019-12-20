@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Abryb\ParameterInfo\Extractor;
 
 use Abryb\ParameterInfo\ParameterTypeExtractorInterface;
+use Abryb\ParameterInfo\Util\TypeCollection;
 use Abryb\ParameterInfo\Util\TypeComparator;
 use Abryb\ParameterInfo\Util\TypeSpecifier;
 
 /**
  * @author Błażej Rybarkiewicz <b.rybarkiewicz@gmail.com>
  */
-class SpecifyingTypeExtractor implements ParameterTypeExtractorInterface
+final class SpecifyingTypeExtractor implements ParameterTypeExtractorInterface
 {
     /**
      * @var ParameterTypeExtractorInterface
@@ -56,20 +57,22 @@ class SpecifyingTypeExtractor implements ParameterTypeExtractorInterface
         $specifying    = $this->specifyingExtractor->getTypes($parameter);
 
         if (empty($originalTypes)) {
-            return $specifying;
+            return (new TypeCollection($specifying))->unique()->toArray();
         }
 
-        $result = [];
+        $result = new TypeCollection();
         foreach ($originalTypes as $o) {
             foreach ($specifying as $s) {
                 $r = $this->typeSpecifier->specifyType($o, $s);
 
                 if (!$this->typeComparator->typesAreEqual($r, $o)) { // so specifier did something
-                    $result[] = $r;
+                    if (!$result->contains($r)) {
+                        $result->add($r);
+                    }
                 }
             }
         }
 
-        return $result;
+        return $result->generalize()->toArray();
     }
 }

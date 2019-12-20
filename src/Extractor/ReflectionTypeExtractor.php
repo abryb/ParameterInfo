@@ -10,7 +10,7 @@ use Abryb\ParameterInfo\Type;
 /**
  * @author Błażej Rybarkiewicz <b.rybarkiewicz@gmail.com>
  */
-class ReflectionTypeExtractor implements ParameterTypeExtractorInterface
+final class ReflectionTypeExtractor implements ParameterTypeExtractorInterface
 {
     /**
      * {@inheritdoc}

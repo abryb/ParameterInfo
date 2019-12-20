@@ -15,7 +15,7 @@ use phpDocumentor\Reflection\DocBlockFactoryInterface;
 /**
  * @author Błażej Rybarkiewicz <b.rybarkiewicz@gmail.com>
  */
-class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescriptionExtractorInterface
+final class PhpDocExtractor implements ParameterTypeExtractorInterface, ParameterDescriptionExtractorInterface
 {
     /**
      * @var DocBlockFactory

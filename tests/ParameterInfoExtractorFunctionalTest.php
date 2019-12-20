@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Abryb\ParameterInfo\Tests;
 
 use Abryb\ParameterInfo\ParameterInfoExtractorFactory;
-use Abryb\ParameterInfo\Type;
+use Abryb\ParameterInfo\Tests\Helper\TypeFixtures;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,32 +26,21 @@ class ParameterInfoExtractorFunctionalTest extends TestCase
     public function functionDataProvider()
     {
         /**
-         * @param object|null                               $a0
-         * @param \DateTime[]|\DateTimeInterface[]|iterable $a1
+         * @param object|null                      $a0
+         * @param \DateTime[]|\DateTime[]|iterable $a1
+         * @param \DateTime[]|\DateTimeInterface[] $a2
+         * @param int|string                       $a3
+         * @param \DateTime                        $a4
          */
-        $function = function ($a0, iterable $a1) {
+        $function = function ($a0, iterable $a1, array $a2, ?int $a3, \DateTimeInterface $a4) {
         };
 
         $expected = [
-            'a0' => [new Type(Type::BUILTIN_TYPE_OBJECT, true)],
-            'a1' => [
-                new Type(
-                    Type::BUILTIN_TYPE_ITERABLE,
-                    false,
-                    null,
-                    true,
-                    new Type(Type::BUILTIN_TYPE_INT),
-                    new Type(Type::BUILTIN_TYPE_OBJECT, false, \DateTime::class)
-                ),
-                new Type(
-                    Type::BUILTIN_TYPE_ITERABLE,
-                    false,
-                    null,
-                    true,
-                    new Type(Type::BUILTIN_TYPE_INT),
-                    new Type(Type::BUILTIN_TYPE_OBJECT, false, \DateTimeInterface::class)
-                ),
-            ],
+            'a0' => [TypeFixtures::nullableObject()],
+            'a1' => [TypeFixtures::iterableOfDateTime()],
+            'a2' => [TypeFixtures::arrayOfDateTimeInterface()],
+            'a3' => [TypeFixtures::int()],
+            'a4' => [TypeFixtures::dateTime()],
         ];
 
         $ref = new \ReflectionFunction($function);

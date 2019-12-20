@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Abryb\ParameterInfo\Tests\Util;
 
+use Abryb\ParameterInfo\Tests\Helper\TypeFixtures;
 use Abryb\ParameterInfo\Type;
 use Abryb\ParameterInfo\Util\TypeSpecifier;
 use PHPUnit\Framework\TestCase;
@@ -33,30 +34,22 @@ class TypeSpecifierTest extends TestCase
 
     public function canSpecifyTypeDataProvider()
     {
-        $string                   = new Type(Type::BUILTIN_TYPE_STRING);
-        $iterable                 = new Type(Type::BUILTIN_TYPE_ITERABLE);
-        $array                    = new Type(Type::BUILTIN_TYPE_ARRAY);
-        $iterableCollection       = new Type(Type::BUILTIN_TYPE_ITERABLE, false, null, true);
-        $arrayCollection          = new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true);
-        $arrayCollectionIntString = new Type(Type::BUILTIN_TYPE_ARRAY, false, null, true, new Type(Type::BUILTIN_TYPE_INT), new Type(Type::BUILTIN_TYPE_STRING));
-        $nullableArray            = new Type(Type::BUILTIN_TYPE_ARRAY, true);
-        $object                   = new Type(Type::BUILTIN_TYPE_OBJECT);
-        $objectDateTimeInterface  = new Type(Type::BUILTIN_TYPE_OBJECT, false, \DateTimeInterface::class);
-        $objectDateTime           = new Type(Type::BUILTIN_TYPE_OBJECT, false, \DateTime::class);
-
         return [
-            //            [null, null, null],
-            //            [null, $object, $object],
-            //            [$object, null, $object],
-            //            [$string, $arrayCollectionIntString, $string],
-            //            [$iterable, $array, $iterable],
-            //            [$array, $iterable, $array],
-            [$array, $iterableCollection, $arrayCollection],
-            [$arrayCollection, $arrayCollectionIntString, $arrayCollectionIntString],
-            [$nullableArray, $array, $array],
-            [$array, $nullableArray, $array],
-            [$object, $objectDateTimeInterface, $objectDateTimeInterface],
-            [$objectDateTimeInterface, $objectDateTime, $objectDateTime],
+            [null, null, null],
+            [null, TypeFixtures::object(), TypeFixtures::object()],
+            [TypeFixtures::object(), null, TypeFixtures::object()],
+            [TypeFixtures::nullableString(), TypeFixtures::int(), TypeFixtures::nullableString()],
+            [TypeFixtures::nullableString(), TypeFixtures::string(), TypeFixtures::string()],
+            [TypeFixtures::string(), TypeFixtures::arrayOfStrings(), TypeFixtures::string()],
+            [TypeFixtures::iterable(), TypeFixtures::array(), TypeFixtures::iterable()],
+            [TypeFixtures::array(), TypeFixtures::iterable(), TypeFixtures::array()],
+            [TypeFixtures::array(), TypeFixtures::iterableCollection(), TypeFixtures::arrayCollection()],
+            [TypeFixtures::arrayCollection(), TypeFixtures::arrayOfStrings(), TypeFixtures::arrayOfStrings()],
+            [TypeFixtures::nullableArray(), TypeFixtures::array(), TypeFixtures::array()],
+            [TypeFixtures::array(), TypeFixtures::nullableArray(), TypeFixtures::array()],
+            [TypeFixtures::object(), TypeFixtures::dateTimeInterface(), TypeFixtures::dateTimeInterface()],
+            [TypeFixtures::dateTimeInterface(), TypeFixtures::dateTime(), TypeFixtures::dateTime()],
+            [TypeFixtures::dateTime(), TypeFixtures::dateInterval(), TypeFixtures::dateTime()],
         ];
     }
 }

@@ -8,10 +8,8 @@ namespace Abryb\ParameterInfo;
  * Type value object (immutable).
  *
  * @author Kévin Dunglas <dunglas@gmail.com>
- *
- * @final
  */
-class Type
+final class Type
 {
     const BUILTIN_TYPE_INT      = 'int';
     const BUILTIN_TYPE_FLOAT    = 'float';

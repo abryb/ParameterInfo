@@ -11,7 +11,7 @@ use Abryb\ParameterInfo\Type;
  *
  * @internal
  */
-class TypeSpecifier
+final class TypeSpecifier
 {
     public function specifyType(?Type $original, ?Type $specifying): ?Type
     {
@@ -61,6 +61,10 @@ class TypeSpecifier
 
     private function specifyNullable(Type $original, Type $specifying): Type
     {
+        if ($original->getBuiltinType() !== $specifying->getBuiltinType()) {
+            return $original;
+        }
+
         $nullable = $original->isNullable() && $specifying->isNullable();
 
         return new Type(

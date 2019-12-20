@@ -11,7 +11,7 @@ use Abryb\ParameterInfo\Type;
  *
  * @internal
  */
-class TypeCollection
+final class TypeCollection
 {
     /**
      * @var array|Type[]
@@ -28,10 +28,10 @@ class TypeCollection
      *
      * @param Type[] $types
      */
-    public function __construct(array $types = [], TypeComparator $typeComparator = null)
+    public function __construct(array $types = [])
     {
         $this->types          = $types;
-        $this->typeComparator = $typeComparator ?? new TypeComparator();
+        $this->typeComparator = new TypeComparator();
     }
 
     public function unique(): TypeCollection
@@ -46,6 +46,18 @@ class TypeCollection
         return $types;
     }
 
+    public function generalize(): TypeCollection
+    {
+        $result = [];
+        foreach ($this->types as $type) {
+            if (!$this->containsMoreGenericType($type)) {
+                $result[] = $type;
+            }
+        }
+
+        return new static($result);
+    }
+
     /**
      * @return Type[]
      */
@@ -58,11 +70,11 @@ class TypeCollection
     {
         foreach ($this->types as $type) {
             if ($this->typeComparator->typesAreEqual($type, $askedType)) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 
     public function add(Type $type): self
@@ -70,5 +82,16 @@ class TypeCollection
         $this->types[] = $type;
 
         return $this;
+    }
+
+    private function containsMoreGenericType(Type $a)
+    {
+        foreach ($this->types as $type) {
+            if ($this->typeComparator->firstTypeIsMoreGeneralThanSecond($type, $a)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

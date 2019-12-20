@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * @author Błażej Rybarkiewicz <b.rybarkiewicz@gmail.com>
  *
  * @internal
- * @coversNothing
+ * @covers \Abryb\ParameterInfo\Extractor\ReflectionTypeExtractor
  */
 class ReflectionTypeExtractorTest extends TestCase
 {
