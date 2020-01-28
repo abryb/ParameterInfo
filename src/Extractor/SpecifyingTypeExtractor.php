@@ -62,12 +62,16 @@ final class SpecifyingTypeExtractor implements ParameterTypeExtractorInterface
 
         $result = new TypeCollection();
         foreach ($originalTypes as $o) {
-            foreach ($specifying as $s) {
-                $r = $this->typeSpecifier->specifyType($o, $s);
+            if (empty($specifying)) {
+                $result->add($o);
+            } else {
+                foreach ($specifying as $s) {
+                    $r = $this->typeSpecifier->specifyType($o, $s);
 
-                if (!$this->typeComparator->typesAreEqual($r, $o)) { // so specifier did something
-                    if (!$result->contains($r)) {
-                        $result->add($r);
+                    if (!$this->typeComparator->typesAreEqual($r, $o)) { // so specifier did something
+                        if (!$result->contains($r)) {
+                            $result->add($r);
+                        }
                     }
                 }
             }

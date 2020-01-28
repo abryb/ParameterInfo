@@ -32,7 +32,7 @@ class ParameterInfoExtractorFunctionalTest extends TestCase
          * @param int|string                       $a3
          * @param \DateTime                        $a4
          */
-        $function = function ($a0, iterable $a1, array $a2, ?int $a3, \DateTimeInterface $a4) {
+        $function = function ($a0, iterable $a1, array $a2, ?int $a3, \DateTimeInterface $a4, string $a5) {
         };
 
         $expected = [
@@ -41,6 +41,7 @@ class ParameterInfoExtractorFunctionalTest extends TestCase
             'a2' => [TypeFixtures::arrayOfDateTimeInterface()],
             'a3' => [TypeFixtures::int()],
             'a4' => [TypeFixtures::dateTime()],
+            'a5' => [TypeFixtures::string()],
         ];
 
         $ref = new \ReflectionFunction($function);
